@@ -54,6 +54,10 @@ sampleSongs.push({ name: 'Tight Rope',
                    trackNumber: 7
 });
 
+albumsList.forEach(function(album){
+  album.songs = sampleSongs;
+})
+
 db.Album.remove({}, function(err, albums){
 
   db.Album.create(albumsList, function(err, albums){
@@ -61,11 +65,6 @@ db.Album.remove({}, function(err, albums){
     console.log("all albums:", albums);
     console.log("created", albums.length, "albums");
 
-    db.Songs.create(sampleSongs, function(err, songs){
-      if (err) { return console.log('ERROR', err); }
-
-      console.log(songs);
-    });
     process.exit();
   });
 
