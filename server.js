@@ -13,6 +13,8 @@ app.use(express.static(__dirname + '/public'));
 app.use('/vendor', express.static(__dirname + '/bower_components'));
 
 var controllers = require('./controllers');
+var db = require("./models");
+
 
 
 /**********
