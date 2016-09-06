@@ -7,7 +7,6 @@
 
 
 /* hard-coded data! */
-var sampleAlbums = [];
 var template;
 var source;
 
@@ -18,25 +17,40 @@ var source;
 
 $(document).ready(function() {
   console.log('app.js loaded!');
-  console.log(sampleAlbums);
 
   source = $('#album-template').html();
   template = Handlebars.compile(source);
 
 
-$.get('/api/albums').success(function (albums) {
-  console.log(albums);
-  albums.forEach(function(album) {
+  $.get('/api/albums').success(function (albums) {
+    console.log(albums);
+    albums.forEach(function(album) {
 
-    console.log(album);
-    renderAlbum(album);
+      console.log(album);
+      renderAlbum(album);
+    });
   });
-});
+
+  $("#new-album-form").submit(function(event){
+    event.preventDefault();
+
+    var data = $("#new-album-form").serialize();
+    // console.log(album);
+    $.post('/api/albums', data, function(album){
+
+      console.log(album);
+      renderAlbum(album);
+    });
+
+    $(this).trigger("reset");
+
+  });
 });
 
 // this function takes a single album and renders it to the page
+
 function renderAlbum(album) {
   console.log('rendering album:', album);
-  var albumHtml = template( album );
+  var albumHtml = template(album);
   $('#albums').prepend(albumHtml);
 }

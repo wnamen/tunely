@@ -16,7 +16,23 @@ function index(req, res) {
 
 function create(req, res) {
   // FILL ME IN !
+
+  var genres = req.body.genres.split(',').map(function(item) {
+    return item.trim();
+  });
+
+  req.body.genres = genres;
+
+  db.Album.create(req.body, function (err, album) {
+    if (err) {
+      console.log(err);
+    }
+
+    res.json(album);
+  });
 }
+
+
 
 function show(req, res) {
   // FILL ME IN !
